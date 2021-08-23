@@ -1,5 +1,5 @@
-const ContactSchema = require('./joiContactSchema')
+const contactSchema = require('./contactSchema')
 
 module.exports = {
-  ContactSchema,
+  contactSchema,
 }
