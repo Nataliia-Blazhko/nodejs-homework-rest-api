@@ -1,18 +1,16 @@
-const { contactsModel } = require('../../model')
-const { contactSchema } = require('../../validation')
+const { Contact } = require('../../models')
 
 const updateContact = async (req, res, next) => {
   try {
-    const { error } = contactSchema.validate(req.body)
-    if (error) {
-      console.log(error)
-      return res.status(400).json({ message: error.message })
-    }
-    const updatedContact = await contactsModel.updateContact(
-      req.params.contactId,
+    const { contactId } = req.params
+
+    const updatedContact = await Contact.findByIdAndUpdate(
+      contactId,
       req.body,
+      {
+        new: true,
+      },
     )
-    console.log(updatedContact)
     if (!updatedContact) {
       return res
         .status(404)
