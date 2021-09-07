@@ -1,3 +1,4 @@
+const gravatar = require('gravatar')
 const { Conflict } = require('http-errors')
 
 const { User } = require('../../models')
@@ -9,8 +10,9 @@ const signup = async (req, res, next) => {
     if (user) {
       throw new Conflict('Email in use')
     }
-
-    const newUser = new User({ email, subscription })
+    const avatar = gravatar.url(email)
+    console.log(avatar)
+    const newUser = new User({ email, subscription, avatar })
     newUser.setPassword(password)
     await newUser.save()
 
