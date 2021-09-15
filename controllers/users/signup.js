@@ -10,9 +10,9 @@ const signup = async (req, res, next) => {
     if (user) {
       throw new Conflict('Email in use')
     }
-    const avatar = gravatar.url(email)
-    console.log(avatar)
-    const newUser = new User({ email, subscription, avatar })
+    const avatarURL = gravatar.url(email)
+
+    const newUser = new User({ email, subscription, avatarURL })
     newUser.setPassword(password)
     await newUser.save()
 

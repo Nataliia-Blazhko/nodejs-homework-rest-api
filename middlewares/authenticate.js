@@ -11,16 +11,17 @@ const authenticate = async (req, res, next) => {
     if (bearer !== 'Bearer') {
       throw new Unauthorized()
     }
-    const { id } = jwt.verify(token, SECRET_KEY)
 
-    const user = await User.findOne({ _id: id })
+    jwt.verify(token, SECRET_KEY)
+
+    const user = await User.findOne({ token })
     if (!user) {
-      throw new Unauthorized()
+      throw new Unauthorized('Not authorized')
     }
     req.user = user
     next()
   } catch (error) {
-    res.json(error)
+    res.status(401).json(error)
   }
 }
 
