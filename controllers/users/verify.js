@@ -4,7 +4,6 @@ const { User } = require('../../models')
 const verify = async (req, res) => {
   try {
     const { verificationToken } = req.params
-    console.log(verificationToken)
     const user = await User.findOne({ verifyToken: verificationToken })
     if (!user) {
       throw new NotFound('User not found')

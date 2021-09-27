@@ -52,7 +52,7 @@ const joiSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
   avatarURL: Joi.string(),
-  verifyToken: Joi.string().min(6).required(),
+  verifyToken: Joi.string().min(6),
   verify: Joi.boolean(),
 })
 

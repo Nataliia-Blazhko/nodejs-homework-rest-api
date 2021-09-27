@@ -13,6 +13,7 @@ const signup = async (req, res, next) => {
     if (user) {
       throw new Conflict('Email in use')
     }
+
     const avatarURL = gravatar.url(email)
     const verifyToken = v4()
 
@@ -20,14 +21,15 @@ const signup = async (req, res, next) => {
     newUser.setPassword(password)
     await newUser.save()
 
-    console.log(process.env.EMAIL_TOKEN)
     sgMail.setApiKey(process.env.EMAIL_TOKEN)
 
+    const verifyLink = `${process.env.HOST}/users/verify/${verifyToken}`
+
     const msg = {
-      to: newUser.email, // Change to your recipient
-      from: 'blazhko.natasha91@gmail.com', // Change to your verified sender
+      to: newUser.email,
+      from: 'blazhko.natasha91@gmail.com',
       subject: 'Sending with SendGrid is Fun',
-      html: `<strong>Hello Bitch!</strong><p>Your ferification link <a href='http:localhost:3000/users/verify/${verifyToken}'>go here motherfucker</a></p>`,
+      html: `<strong> Hello New user! </strong><p> Your verification link <a href='${verifyLink}'> go here </a></p>`,
     }
     sgMail
       .send(msg)

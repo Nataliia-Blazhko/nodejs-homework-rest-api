@@ -19,4 +19,6 @@ router.patch(
 )
 
 router.get('/verify/:verificationToken', usersController.verify)
+router.post('/verify', usersController.resendEmail)
+
 module.exports = router
